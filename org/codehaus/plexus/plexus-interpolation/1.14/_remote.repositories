@@ -1,3 +1,7 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+<<<<<<< HEAD
 #Tue Oct 19 21:09:02 GMT+08:00 2021
+=======
+#Tue Oct 19 21:14:50 CST 2021
+>>>>>>> 0a38c370b4544250df6989fea79d3ace5e3d5b9c
 plexus-interpolation-1.14.pom>aliyunmaven=
