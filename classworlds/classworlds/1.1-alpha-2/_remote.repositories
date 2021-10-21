@@ -1,8 +1,4 @@
 #NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-<<<<<<< HEAD
-#Tue Oct 19 21:10:28 GMT+08:00 2021
-=======
-#Tue Oct 19 21:15:32 CST 2021
->>>>>>> 0a38c370b4544250df6989fea79d3ace5e3d5b9c
+#Thu Oct 21 15:23:56 GMT+08:00 2021
 classworlds-1.1-alpha-2.pom>aliyunmaven=
 classworlds-1.1-alpha-2.jar>aliyunmaven=
