@@ -13,9 +13,9 @@ import cn.cqu.edu.domain.UserRepository;
 @RestController
 public class UserController {
     @Autowired
-    private static UserRepository userRepository;
+    private UserRepository userRepository;
     @RequestMapping(value = "/user/getPwd") // 必须是网页才会访问数据库？
-    public static String getPwd(String userId){
+    public String getPwd(String userId){
         System.out.println("正在查找"+userId+"的密码");
         User user=userRepository.findById(userId).get();
         if(user!=null) return user.getPassword();
