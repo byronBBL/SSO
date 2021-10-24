@@ -40,3 +40,4 @@ public class MyWebMvcConfig implements WebMvcConfigurer {
         };
         return myWebMvcConfig;
     }
+    }

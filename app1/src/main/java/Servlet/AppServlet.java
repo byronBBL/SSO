@@ -1,4 +1,4 @@
-package servlet;
+package Servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +11,7 @@ import java.io.IOException;
  * app's servlet
  */
 @WebServlet(value = "/app")
-public class appServlet extends HttpServlet {
+public class AppServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request,response);
     }

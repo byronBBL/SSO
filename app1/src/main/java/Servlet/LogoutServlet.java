@@ -1,4 +1,4 @@
-package servlet;
+package Servlet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,7 +34,7 @@ public class LogoutServlet extends HttpServlet {
         // 删除cookie中jwt记录
         Cookie cookies[] = request.getCookies();
         for (Cookie cookie:cookies) { // 循环找到相应的jwt
-            if("APP1_JWT".equalsIgnoreCase(cookie.getName())) {
+            if("JWT".equalsIgnoreCase(cookie.getName())) {
                 cookie.setMaxAge(0);
                 cookie.setPath("/");
                 response.addCookie(cookie);
