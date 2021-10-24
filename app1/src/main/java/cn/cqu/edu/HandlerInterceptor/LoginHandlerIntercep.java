@@ -12,6 +12,12 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.apache.tomcat.util.http.parser.Cookie;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import java.io.IOException;
+import java.util.Enumeration;
+
 public class LoginHandlerIntercep implements HandlerInterceptor {
 
     private static final String SECRET_KEY = "CQU_FOREVER&"; // 默认秘钥
@@ -53,14 +59,24 @@ public class LoginHandlerIntercep implements HandlerInterceptor {
         String user_id = null;
         if(cookies != null && cookies.length>0) {
             for (javax.servlet.http.Cookie cookie : cookies) {
-                if("JWT".equals(cookie.getName()))
+                if("JWT1".equals(cookie.getName()))
                     user_id = getUserId(cookie.getValue());
             }
         }
          // 获得网址的参数JWT
          String JWT = httpRequest.getParameter("jwt_cookie");
          System.out.println("jwt_cookie"+JWT);
-         if(JWT == null){  // 网址存在JWT，是cas已完成登录验证的返回
+         if(JWT != null){  // 网址存在JWT，是cas已完成登录验证的返回
+            // 设置本地cookie
+            javax.servlet.http.Cookie cookie = new javax.servlet.http.Cookie("JWT1", JWT);
+            cookie.setMaxAge(60*5);
+            cookie.setPath("/");
+            httpResponse.addCookie(cookie);
+            // hide jwt message in url
+            httpResponse.sendRedirect(String.valueOf(httpRequest.getRequestURL()));
+//            chain.doFilter(httpRequest, httpResponse);
+        }
+        if(JWT == null || user_id == null){  // 网址存在JWT，是cas已完成登录验证的返回
             response.sendRedirect("http://localhost:8080/cas/login" + "?"
             + "LOCAL_SERVICE" + "="
             + httpRequest.getRequestURL());
