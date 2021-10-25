@@ -13,12 +13,7 @@ public class JwtUtils {
     private static final String SECRET_KEY = "CQU"; // 默认秘钥
     private static final long TIME_LIMIT = 86400000; // 默认有效时长: 一天
 
-    /**
-     * 获得一个jwt的串,秘钥和默认时长由类常量给出
-     * 
-     * @param userid 用户的id
-     * @return jwt (String)
-     */
+
     public static String createToken(String userid) {
         Algorithm algorithm = null;
         algorithm = Algorithm.HMAC256(SECRET_KEY);

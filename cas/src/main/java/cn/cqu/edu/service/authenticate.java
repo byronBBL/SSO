@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import cn.cqu.edu.JwtTools.JwtUtils;
@@ -25,7 +26,7 @@ public class authenticate {
     @PostMapping("/cas/Authenticate") // 验证是否密码正确
     public String postAuthentication(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException{
         String LOCAL_SERVICE=null;
-        boolean correct=false;
+        boolean correct=true;
         LOCAL_SERVICE=req.getParameter("LOCAL_SERVICE");
         String userId=req.getParameter("username");
         String pwd=req.getParameter("password");
@@ -38,11 +39,13 @@ public class authenticate {
             correct=pwd_db.equals(pwd);
         }
         if(correct){ // 密码正确
-            System.out.println("密码正确登录成功！跳转到原页面并生成CAS域下的JWT");
-            Cookie CAS_JWT=new Cookie("CAS_JWT",JwtUtils.createToken(userId));
-            CAS_JWT.setMaxAge(60*5);
-            resp.addCookie(CAS_JWT);
+            System.out.println(userId+"密码正确登录成功！跳转到原页面并生成CAS域下的JWT");
+            String CAS_JWT=JwtUtils.createToken(userId);
+            Cookie CAS_JWT_Cookie=new Cookie("CAS_JWT",CAS_JWT);
+            CAS_JWT_Cookie.setMaxAge(60*5);
+            resp.addCookie(CAS_JWT_Cookie);
             if (LOCAL_SERVICE!=null){
+                System.out.println("CAS_JWT:"+CAS_JWT);
                 System.out.println("成功返回"+LOCAL_SERVICE);
                 resp.sendRedirect(LOCAL_SERVICE+"?CAS_JWT="+CAS_JWT);
             }
@@ -63,11 +66,10 @@ public class authenticate {
         String LOCAL_SERVICE=null;
         String cas_userId=null,app_userId=null;
         Cookie[] cookies=req.getCookies(); // 判断之前有没有登陆过cas
+        String APP_JWT=req.getParameter("APP_JWT"); // 验证APP_JWT是否有效
+        if(APP_JWT!=null) app_userId=JwtUtils.getPayload(APP_JWT);
         if(cookies!=null){
             for(Cookie cookie:cookies){
-                if(cookie.getName().equals("APP_JWT")){ // 判断app本地已经存在的令牌是否有效
-                    app_userId=JwtUtils.getPayload(cookie.getValue());
-                }
                 if(cookie.getName().equals("CAS_JWT")){ 
                     cas_userId=JwtUtils.getPayload(cookie.getValue()); // 判断之前是否登录过cas统一认证平台
                 }
@@ -76,13 +78,14 @@ public class authenticate {
         if(cas_userId!=null){ // 说明之前登录过cas平台
             if(app_userId!=null){ // 说明app不仅登录了cas平台还在本地生成了有效的令牌
                 System.out.println(cas_userId+"app下的令牌有效，成功返回数据");
-                LOCAL_SERVICE=req.getParameter("LOCAL_SERVICE");
-                resp.sendRedirect(LOCAL_SERVICE+"?userId="+app_userId); 
+                return "valid";
+                // 这里为了安全没有直接显式的用get在url上面传递参数而是用post隐藏参数传递，这样可以避免伪造url地址就可以直接访问app页面了
+                // resp.sendRedirect(LOCAL_SERVICE+"?userId="+app_userId); 
             }
             else{ // 说明当前app要么还没有生成本地的令牌，要么是生成的令牌过期了或者被修改了需要重新生成
                 System.out.println(cas_userId+"已经登录过CAS，跳转到原页面通过CAS域下已有的JWT生成本地的APP_JWT令牌");
                 LOCAL_SERVICE=req.getParameter("LOCAL_SERVICE"); 
-                Cookie APP_JWT=new Cookie("APP_JWT",JwtUtils.createToken(cas_userId));
+                APP_JWT=JwtUtils.createToken(cas_userId);
                 if(LOCAL_SERVICE!=null){
                     resp.sendRedirect(LOCAL_SERVICE+"?APP_JWT="+APP_JWT); // app的本地JWT
                 }

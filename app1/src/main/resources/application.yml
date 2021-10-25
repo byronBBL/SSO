@@ -1,6 +1,6 @@
-# 设置端⼝为8080
+# 设置端⼝为8081
 server:
- port: 8080
+ port: 8081
  
 thymeleaf:
     prefix: classpath:/templates/
@@ -11,12 +11,3 @@ thymeleaf:
         content-type: text/html
     cache: false
 
-spring:
- data:
- mongodb:
- authentication-database: admin
- database: demo
- username: root
- password: "123456" #注意这⾥要⽤引号把密码括起来
- host: 127.0.0.1
- port: 27017

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+
+<body>
+    <h2>成功注销账号！</h2>
+    <!-- <button onclick="logoutAll()">LOGOUT</button> -->
+
+    <script type="text/javascript"  src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript">
+        function logoutAll() {
+            var urls = ["http://localhost:8081/app1/logout"]
+            // "http://localhost:8082/app2/logout"];
+            // var urls=["http://localhost:8080/test"]
+            for (let i = 0; i < urls.length; i++) { // 这里不用let可能会由于js函数提升导致后面console出错
+                console.log(urls[i]);
+                // $.getJSON(urls[i], { id: 0, action: 'jobcategoryjson' }, function(json) { alert(json[0].pid); alert(json[0].items[0]._name); });
+                $.ajax({
+                    type:'GET',
+                    url:urls[i],
+                    crossDomain:true,
+                    dataType:'jsonp'
+                    // success:function(data){
+                    //     console.log("注销一个子系统的令牌");
+                    //     console.log(urls[i]);
+                    // }
+                })
+            }
+            // window.location = "/cas";
+        }
+        console.log("sssssss");
+        logoutAll();
+    </script>
+</body>
+
+</html>
