@@ -1,11 +1,10 @@
 D:\java\SSO\cas\src\main\java\cn\cqu\edu\service\authenticate.java
+D:\java\SSO\cas\src\main\java\cn\cqu\edu\service\logoutAll.java
 D:\java\SSO\cas\src\main\java\cn\cqu\edu\service\login.java
 D:\java\SSO\cas\src\main\java\cn\cqu\edu\domain\UserRepository.java
 D:\java\SSO\cas\src\main\java\cn\cqu\edu\domain\User.java
 D:\java\SSO\cas\src\main\java\cn\cqu\edu\App.java
-D:\java\SSO\cas\src\main\java\cn\cqu\edu\service\appIndex.java
 D:\java\SSO\cas\src\main\java\cn\cqu\edu\JwtTools\JwtUtils.java
-D:\java\SSO\cas\src\main\java\cn\cqu\edu\service\testResponse.java
 D:\java\SSO\cas\src\main\java\cn\cqu\edu\controller\UserController.java
 D:\java\SSO\cas\src\main\java\cn\cqu\edu\service\logout.java
 D:\java\SSO\cas\src\main\java\cn\cqu\edu\service\index.java

@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class logout {
     @RequestMapping("app1/logout")
     public void doLogout(HttpServletRequest request, HttpServletResponse response){
-        System.out.println("成功注销一个JWT");
+        System.out.println("成功注销app1的APP_JWT");
         Cookie cookies[] = request.getCookies();
         for (Cookie cookie:cookies) { 
             if("APP_JWT".equalsIgnoreCase(cookie.getName())) {
                 cookie.setMaxAge(0);
                 cookie.setPath("/app1");
                 response.addCookie(cookie);
-                //tttt
             }
         }
     }

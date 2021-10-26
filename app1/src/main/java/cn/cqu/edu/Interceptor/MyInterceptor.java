@@ -40,7 +40,7 @@ public class MyInterceptor implements HandlerInterceptor {
             if(APP_JWT!=null){
                 System.out.println("APP本地存在JWT,跳转到CAS认证JWT的有效性");
                 response.sendRedirect("http://localhost:8080/cas/Authenticate?LOCAL_SERVICE=" + request.getRequestURL()+"&APP_JWT="+APP_JWT);
-            } ///
+            } 
             else{
                 System.out.println("APP本地不存在JWT,跳转到CAS进行认证，若有子系统登录过则直接返回CAS_JWT,否则先登录CAS再返回");
                 response.sendRedirect("http://localhost:8080/cas/Authenticate?LOCAL_SERVICE=" + request.getRequestURL());

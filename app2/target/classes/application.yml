@@ -1,0 +1,13 @@
+# 设置端⼝为8081
+server:
+ port: 8082
+ 
+thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+        content-type: text/html
+    cache: false
+

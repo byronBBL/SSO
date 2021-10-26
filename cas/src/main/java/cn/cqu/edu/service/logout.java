@@ -1,5 +1,7 @@
 package cn.cqu.edu.service;
 
+import java.io.IOException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Controller
 public class logout {
     @RequestMapping("/cas/logout")
-    public String doLogout(HttpServletRequest req, HttpServletResponse resp){
+    public void doLogout(HttpServletRequest req, HttpServletResponse resp) throws IOException{
         Cookie[] cookies=req.getCookies(); // 判断之前有没有登陆过cas
         if(cookies!=null){
             for(Cookie cookie:cookies){
@@ -21,6 +23,5 @@ public class logout {
                 }
             }
         }
-        return "logout";
     }
 }
