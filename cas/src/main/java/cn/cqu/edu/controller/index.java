@@ -11,6 +11,6 @@ public class index {
     @RequestMapping("/cas")
     public String goIndex(){
         System.out.println("index");
-        return "CAS主页";
+        return "index";
     }
 }
