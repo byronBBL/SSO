@@ -1,4 +1,4 @@
-package cn.cqu.edu.service;
+package cn.cqu.edu.controller;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

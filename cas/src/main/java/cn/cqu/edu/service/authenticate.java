@@ -81,10 +81,10 @@ public class authenticate {
             if (app_userId != null && app_userId.equals(cas_userId)) {  // 字符串是对象不能直接用等号判断相等！！！！
                 System.out.println(cas_userId + "app下的令牌有效，成功返回数据");
                 LOCAL_SERVICE = req.getParameter("LOCAL_SERVICE");
-                resp.sendRedirect(LOCAL_SERVICE+"?validToken=true");
-                // return "valid";
+                // resp.sendRedirect(LOCAL_SERVICE+"?validToken=true");
+                // resp.sendRedirect("http://localhost:8080/cas/validToken?LOCAL_SERVICE="+LOCAL_SERVICE);
+                return "valid";
                 // 这里为了安全没有直接显式的用get在url上面传递参数而是用post隐藏参数传递，这样可以避免伪造url地址就可以直接访问app页面了
-                // resp.sendRedirect(LOCAL_SERVICE+"?userId="+app_userId);
             } else { // 说明当前app要么还没有生成本地的令牌，要么是生成的令牌过期了或者被修改了需要重新生成
                 System.out.println(cas_userId + "已经登录过CAS，跳转到原页面通过CAS域下已有的JWT生成本地的APP_JWT令牌");
                 LOCAL_SERVICE = req.getParameter("LOCAL_SERVICE");
