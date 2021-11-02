@@ -23,7 +23,7 @@ public class authenticate {
     private UserRepository userRepository;
 
     @PostMapping("/cas/Authenticate") // 验证是否密码正确
-    public String postAuthentication(HttpServletRequest req, HttpServletResponse resp)
+    public void postAuthentication(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String LOCAL_SERVICE = null;
         boolean correct = true;
@@ -43,23 +43,22 @@ public class authenticate {
             Cookie CAS_JWT_Cookie = new Cookie("CAS_JWT", CAS_JWT);
             CAS_JWT_Cookie.setMaxAge(60 * 5);
             resp.addCookie(CAS_JWT_Cookie);
-            if (LOCAL_SERVICE != null) {
+            if (LOCAL_SERVICE != null&&LOCAL_SERVICE.length()!=0) {
                 System.out.println("CAS_JWT:" + CAS_JWT);
                 System.out.println("成功返回" + LOCAL_SERVICE);
                 resp.sendRedirect(LOCAL_SERVICE + "?CAS_JWT=" + CAS_JWT);
             } else {
                 System.out.println("没有原页面直接进入CAS主页面");
-                return "index";
+                resp.sendRedirect("http://localhost:8080/cas");
             }
         } else { // 密码错误，验证失败，重新输入
             System.out.println("密码错误，验证失败，重新回到登录界面");
             resp.sendRedirect("http://localhost:8080/cas/login?LOCAL_SERVICE=" + LOCAL_SERVICE);
             // return "login";
         }
-        return null;
     }
 
-    @GetMapping("/cas/Authenticate") // 验证是否密码正确
+    @GetMapping("/cas/Authenticate") // 认证
     public String GetAuthentication(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, ServletException {
         String LOCAL_SERVICE = null;
@@ -92,7 +91,7 @@ public class authenticate {
                 if (LOCAL_SERVICE != null) {
                     resp.sendRedirect(LOCAL_SERVICE + "?CAS_JWT=" + CAS_JWT); // app的本地JWT
                 } else { // 没有原页面返回到认证主页面
-                    return "index";
+                    resp.sendRedirect("http://localhost:8080/cas");
                 }
             }
         } else { // 之前没有系统登录过统一认证CAS平台，则必须要登录一次

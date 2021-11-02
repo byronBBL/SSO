@@ -24,6 +24,6 @@ public class logout {
                 }
             }
         }
-        resp.sendRedirect("http://localhost:8080/cas");
+        resp.sendRedirect("http://localhost:8080/cas/login");
     }
 }
