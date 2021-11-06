@@ -26,7 +26,7 @@ public class authenticate {
     public void postAuthentication(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String LOCAL_SERVICE = null;
-        boolean correct = true;
+        boolean correct = false;
         LOCAL_SERVICE = req.getParameter("LOCAL_SERVICE");
         String userId = req.getParameter("username");
         String pwd = req.getParameter("password");
@@ -53,7 +53,8 @@ public class authenticate {
             }
         } else { // 密码错误，验证失败，重新输入
             System.out.println("密码错误，验证失败，重新回到登录界面");
-            resp.sendRedirect("http://localhost:8080/cas/login?LOCAL_SERVICE=" + LOCAL_SERVICE);
+            if(LOCAL_SERVICE != null&&LOCAL_SERVICE.length()!=0)resp.sendRedirect("http://localhost:8080/cas/login?LOCAL_SERVICE=" + LOCAL_SERVICE);
+            else resp.sendRedirect("http://localhost:8080/cas/login");
             // return "login";
         }
     }
